@@ -18,31 +18,56 @@ import util.Utils;
 public class Solver {
 
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
+    public Map<Vehicle, List<Ride>> solution = new HashMap<>();
     public SelfDrivingRides sdr;
     public List<Vehicle> vehicles = new ArrayList<>();
     public Random random;
     public boolean[] removedRides;
     public int MAX_IT = 500000;
 
-    public Solver(SelfDrivingRides sdr) {
+    public Solver(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
+        System.out.println("Solving " + name);
         this.random = new Random();
-        this.removedRides = new boolean[sdr.numRides];
+        superRandomRiding();
+    }
+    
+    public void superRandomRiding() {
+        
+        int bestScore = 0;
+        
+        for(int j = 0; j < MAX_IT; j++ ) {
+        
+            //setup
+            this.removedRides = new boolean[sdr.numRides];
+            this.vehicles = new ArrayList<>();
+            this.rides = new HashMap<>();
+            this.random = new Random();
 
-        for (int i = 0; i < sdr.vehicles; i++) {
-            vehicles.add(new Vehicle(i, new Intersection(0, 0)));
+            for (int i = 0; i < sdr.vehicles; i++) {
+                vehicles.add(new Vehicle(i, new Intersection(0, 0)));
+            }
+
+            for (Vehicle vehicle : vehicles) {
+                List<Ride> ridesA = new ArrayList<>();
+                rides.putIfAbsent(vehicle, ridesA);
+            }
+            
+            randomRiding();
+            
+            int currentScore = Utils.calculateScoreForEntireSolution(rides, sdr);
+        
+            if(currentScore > bestScore) {
+                System.out.println(currentScore);
+                solution = rides;
+                bestScore = currentScore;
+            }
         }
 
-        for (Vehicle vehicle : vehicles) {
-            List<Ride> ridesA = new ArrayList<>();
-            rides.putIfAbsent(vehicle, ridesA);
-        }
-
-        randomRiding();
+    
     }
 
     public void randomRiding() {
-        System.out.println("Starting solving");
 
         int currentIterations = 0;
 

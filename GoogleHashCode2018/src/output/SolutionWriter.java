@@ -24,13 +24,17 @@ public class SolutionWriter
     public final String OutputFile = "output.txt";
     
     public void writeSolution (Map<Vehicle, List<Ride>> carRides) {
+        writeSolution(carRides, OutputFile);
+    }
+    
+    public void writeSolution (Map<Vehicle, List<Ride>> carRides,String outputFileName) {
         PrintWriter pw = null;
         try {
             System.out.println("OUTPUT FILE");
-            pw = new PrintWriter(new File("output.txt"));
+            pw = new PrintWriter(new File(outputFileName));
             for (List<Ride> rides : carRides.values())
             {
-                pw.write(rides.size());
+                pw.write(String.valueOf(rides.size())); // string value else it converts int ot char
                 for (Ride ride : rides)
                 {
                     pw.write(" " + ride.id);

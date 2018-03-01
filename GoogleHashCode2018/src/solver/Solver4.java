@@ -69,22 +69,21 @@ public class Solver4 implements ISolver {
             Ride r = pq.peek();
 
       //      System.out.println(pq.size() + " " + numberOfIterations);
-
             for (Vehicle vehicle : vehicles) {
 
                 if (isValidRide(vehicle.id, vehicle, r)) {
-                    Ride ride = pq.poll();
+                    r = pq.poll();
 
-                    if (ride != null) {
-                        vehicle.rideVehicle(ride);
-                        rides.get(vehicle).add(ride);
-                        removedRides[ride.id] = true;
+                    if (r != null) {
+                        vehicle.rideVehicle(r);
+                        rides.get(vehicle).add(r);
+                        removedRides[r.id] = true;
                     } else {
                         return;
                     }
                 }
             }
-            
+
             pq.poll();
         }
 
@@ -110,6 +109,7 @@ public class Solver4 implements ISolver {
                 }
 
                 rides.get(vehicle).add(ride);
+                vehicle.rideVehicle(ride);
             }
         }
     }
@@ -133,7 +133,6 @@ public class Solver4 implements ISolver {
             r = sdr.rides.get(randomRide);
         }
 
-        removedRides[locationOfBestRide] = true;
         return currentBestRide;
     }
 

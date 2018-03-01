@@ -19,16 +19,16 @@ public class StartUp {
         SelfDrivingRides problem2 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE2).toAbsolutePath()));
         SelfDrivingRides problem3 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE3).toAbsolutePath()));
         SelfDrivingRides problem4 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE4).toAbsolutePath()));
-
-        Solver solv1 = new Solver(problem1,"b");
-        SolutionWriter solutionWriter = new SolutionWriter();
-        solutionWriter.writeSolution(solv1.solution, "b");
-
-        Solver solv2 = new Solver(problem2, "c");
-        solutionWriter.writeSolution(solv2.solution, "c");
-        
-        Solver solv3 = new Solver(problem3, "d");
-        solutionWriter.writeSolution(solv3.solution, "d");
+//
+//        Solver solv1 = new Solver(problem1,"b");
+          SolutionWriter solutionWriter = new SolutionWriter();
+//        solutionWriter.writeSolution(solv1.solution, "b");
+//
+//        Solver solv2 = new Solver(problem2, "c");
+//        solutionWriter.writeSolution(solv2.solution, "c");
+//        
+//        Solver solv3 = new Solver(problem3, "d");
+//        solutionWriter.writeSolution(solv3.solution, "d");
         
         Solver solv4 = new Solver(problem4, "e");
         solutionWriter.writeSolution(solv4.solution, "e");

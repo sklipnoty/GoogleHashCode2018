@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import output.SolutionWriter;
 import util.Utils;
 
 /**
@@ -52,9 +53,8 @@ public class Solver2 {
     private void superRandomRiding() {
         int bestScore = 0;
 
-        for (int j = 0; j < 20; j++) {
+        for (int j = 0; j < 50; j++) {
             init();
-
             randomRiding();
 
             int currentScore = Utils.calculateScoreForEntireSolution(rides, sdr);
@@ -63,6 +63,7 @@ public class Solver2 {
                 System.out.println(currentScore);
                 solution = rides;
                 bestScore = currentScore;
+
             }
         }
     }
@@ -70,7 +71,7 @@ public class Solver2 {
     private void randomRiding() {
         int currentIterations = 0;
 
-        while (currentIterations < MAX_IT) {
+        while (currentIterations < 5000) {
 
             currentIterations++;
 
@@ -87,23 +88,23 @@ public class Solver2 {
             }
         }
     }
-    
-     public Ride pickRandomValidRide(Vehicle vehicle) {
+
+    public Ride pickRandomValidRide(Vehicle vehicle) {
         Ride currentBestRide = null;
         int randomRide = random.nextInt(sdr.numRides);
         Ride r = sdr.rides.get(randomRide);
         int currentBestScore = 0;
         int locationOfBestRide = 0;
-        
-        for(int i = 0; i < 50; i++) {
-            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue();        
 
-            if(currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
+        for (int i = 0; i < 300; i++) {
+            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue();
+
+            if (currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
                 currentBestRide = r;
                 currentBestScore = current;
                 locationOfBestRide = i;
             }
-            
+
             r = sdr.rides.get(randomRide);
         }
 

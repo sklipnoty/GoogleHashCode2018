@@ -37,7 +37,11 @@ public class StartUp {
 //        solutionWriter.writeSolution(solv4.solution, "e");
 
         SolutionWriter solutionWriter = new SolutionWriter();
-        ThreadedSolver threadedSolver = new ThreadedSolver(problem4);
-        solutionWriter.writeSolution(threadedSolver.solve(), "e");
+
+        ThreadedSolver threadedSolver = new ThreadedSolver(problem3);
+        solutionWriter.writeSolution(threadedSolver.solve(), "d");
+
+        ThreadedSolver threadedSolver2 = new ThreadedSolver(problem4);
+        solutionWriter.writeSolution(threadedSolver2.solve(), "e");
     }
 }

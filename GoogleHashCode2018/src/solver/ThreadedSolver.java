@@ -30,24 +30,24 @@ public class ThreadedSolver
     
     public Map<Vehicle, List<Ride>> solve() throws InterruptedException, ExecutionException
     {
-        List<Callable<Solver2>> solvers = new ArrayList<>();
+        List<Callable<Solver3>> solvers = new ArrayList<>();
         
         for (int i = 0; i < NUM_THREADS; i++)
         {
-            solvers.add((Callable<Solver2>) () ->
+            solvers.add((Callable<Solver3>) () ->
             {
-                return new Solver2(sdr, "geeftdannelegestringmeeboeimijnie");
+                return new Solver3(sdr, "geeftdannelegestringmeeboeimijnie");
             });
         }
         
-        List<Future<Solver2>> futureSolvers = executor.invokeAll(solvers);
+        List<Future<Solver3>> futureSolvers = executor.invokeAll(solvers);
 //        executor.awaitTermination(1, TimeUnit.SECONDS);
 //        executor.shutdown();
         
         Map<Vehicle, List<Ride>> solution = null;
         int bestScore = -1;
         
-        for (Future<Solver2> s : futureSolvers)
+        for (Future<Solver3> s : futureSolvers)
         {
             int score = Utils.calculateScoreForEntireSolution(s.get().solution, sdr);
             if (score > bestScore)
@@ -56,6 +56,8 @@ public class ThreadedSolver
                 solution = s.get().solution;
             }
         }
+        
+        System.out.println("BEST SCORE : " + bestScore);
         
         return solution;
     }

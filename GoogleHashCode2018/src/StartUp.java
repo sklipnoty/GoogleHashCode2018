@@ -22,26 +22,12 @@ public class StartUp {
         SelfDrivingRides problem2 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE2).toAbsolutePath()));
         SelfDrivingRides problem3 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE3).toAbsolutePath()));
         SelfDrivingRides problem4 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE4).toAbsolutePath()));
-//
-//        Solver2 solv1 = new Solver2(problem1, "b");
-//        SolutionWriter solutionWriter = new SolutionWriter();
-//        solutionWriter.writeSolution(solv1.solution, "b");
-////
-//        Solver2 solv2 = new Solver2(problem2, "c");
-//        solutionWriter.writeSolution(solv2.solution, "c");
-////        
-//        Solver2 solv3 = new Solver2(problem3, "d");
-//        solutionWriter.writeSolution(solv3.solution, "d");
-//
-//        Solver2 solv4 = new Solver2(problem4, "e");
-//        solutionWriter.writeSolution(solv4.solution, "e");
 
         SolutionWriter solutionWriter = new SolutionWriter();
-
-        ThreadedSolver threadedSolver = new ThreadedSolver(problem3);
-        solutionWriter.writeSolution(threadedSolver.solve(), "d");
-
-        ThreadedSolver threadedSolver2 = new ThreadedSolver(problem4);
+        
+        ThreadedSolver threadedSolver2 = new ThreadedSolver(problem3);
         solutionWriter.writeSolution(threadedSolver2.solve(), "e");
+        
+        System.exit(0);
     }
 }

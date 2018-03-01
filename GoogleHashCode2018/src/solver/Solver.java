@@ -15,7 +15,7 @@ import util.Utils;
  *
  * @author Sklipnoty
  */
-public class Solver {
+public class Solver implements ISolver{
 
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();

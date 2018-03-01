@@ -39,6 +39,7 @@ public class SelfDrivingRides
             ride.latestFinish = in.nextInt();
             ride.from = startInt;
             ride.to = endInt;
+            ride.setScore();
             
             rides.add(ride);
         }

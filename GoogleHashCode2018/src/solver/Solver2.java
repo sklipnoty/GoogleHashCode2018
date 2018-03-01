@@ -9,14 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import output.SolutionWriter;
 import util.Utils;
 
 /**
  *
  * @author Sklipnoty
  */
-public class Solver2 {
+public class Solver2 implements ISolver {
 
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
@@ -96,7 +95,7 @@ public class Solver2 {
         int currentBestScore = 0;
         int locationOfBestRide = 0;
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < sdr.numRides / 3; i++) {
             int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue();
 
             if (currentBestScore < current && isValidRide(randomRide, vehicle, r)) {

@@ -21,7 +21,7 @@ public class ScoreCost
     }
     
     public int getRandomHeuristicValue() {
-        return (int) Math.floor(score/timeCost);
+        return score;
     }
     
 }

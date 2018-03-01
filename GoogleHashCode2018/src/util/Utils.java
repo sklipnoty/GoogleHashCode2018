@@ -47,10 +47,9 @@ public class Utils
     public static ScoreCost calculateScoreCostForOneRideWithCar(
             Vehicle car, 
             Ride ride, 
-            SelfDrivingRides problem, 
-            int currentStep
+            SelfDrivingRides problem
     ) {
-        int step = currentStep;
+        int step = car.tick;
         int score = 0;
         boolean bonus = false;
         step += Utils.getDistance(ride.from, car.it);
@@ -70,6 +69,6 @@ public class Utils
             }
         }
         
-        return new ScoreCost(score, (step - currentStep));
+        return new ScoreCost(score, (step - car.tick));
     } 
 }

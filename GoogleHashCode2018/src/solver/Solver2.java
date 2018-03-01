@@ -23,7 +23,7 @@ public class Solver2 {
     public List<Vehicle> vehicles = new ArrayList<>();
     public Random random;
     public boolean[] removedRides;
-    public int MAX_IT = 500000;
+    public int MAX_IT = 50000;
 
     public Solver2(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
@@ -95,8 +95,8 @@ public class Solver2 {
         int currentBestScore = 0;
         int locationOfBestRide = 0;
         
-        for(int i = 0; i < 5000; i++) {
-            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr, 0).getRandomHeuristicValue();        
+        for(int i = 0; i < 50; i++) {
+            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue();        
 
             if(currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
                 currentBestRide = r;

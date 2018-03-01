@@ -18,7 +18,7 @@ import java.util.Random;
 import util.Utils;
 
 /**
- *
+ * Greedy in terms of Score
  * @author Sklipnoty
  */
 public class Solver3 implements ISolver {
@@ -27,7 +27,7 @@ public class Solver3 implements ISolver {
     private final Random random;
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
     public List<Vehicle> vehicles = new ArrayList<>();
-    public PriorityQueue<Ride> pq = new PriorityQueue<>();
+    public PriorityQueue<Ride> pq = new PriorityQueue<>(new Utils.RideScoreComparator());
     public boolean[] removedRides;
     private static final Integer MAX_IT = 5000;
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();

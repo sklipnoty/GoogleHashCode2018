@@ -1,16 +1,16 @@
 package domain;
 
+import java.util.Comparator;
 import util.Utils;
 
-public class Ride implements Comparable<Ride> {
+public class Ride {
 
     public int id;
     public Intersection from;
     public Intersection to;
     public int earliestStart;
     public int latestFinish;
-
-    private int score;
+    public int score;
 
     public Ride() {
     }
@@ -19,8 +19,9 @@ public class Ride implements Comparable<Ride> {
         this.score = Utils.getDistance(from, to);
     }
 
-    @Override
-    public int compareTo(Ride ride) {
-        return Integer.compare(this.score, ride.score);
+    public int getScore() {
+        return score;
     }
+
+   
 }

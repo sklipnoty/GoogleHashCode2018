@@ -12,7 +12,7 @@ import java.util.Random;
 import util.Utils;
 
 /**
- *
+ * Random. Pure randomness.
  * @author Sklipnoty
  */
 public class Solver implements ISolver{

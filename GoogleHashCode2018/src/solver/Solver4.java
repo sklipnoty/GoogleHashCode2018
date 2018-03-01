@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package solver;
 
 import domain.Intersection;
@@ -8,36 +13,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Random;
 import util.Utils;
 
 /**
- * Randomly pick higher score !
+ * Greedy in terms of Time
  * @author Sklipnoty
  */
-public class Solver2 implements ISolver {
+public class Solver4 implements ISolver {
 
+    private SelfDrivingRides sdr;
+    private final Random random;
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
-    public Map<Vehicle, List<Ride>> solution = new HashMap<>();
-    public SelfDrivingRides sdr;
     public List<Vehicle> vehicles = new ArrayList<>();
-    public Random random;
+    public PriorityQueue<Ride> pq = new PriorityQueue<>(new Utils.RideTimeComparator());
     public boolean[] removedRides;
-    public int MAX_IT = 50000;
+    private static final Integer MAX_IT = 5000;
+    public Map<Vehicle, List<Ride>> solution = new HashMap<>();
 
-    public Solver2(SelfDrivingRides sdr, String name) {
+    public Solver4(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
         System.out.println("Solving " + name);
         this.random = new Random();
-        superRandomRiding();
+        init();
+        greedy();
     }
 
     public void init() {
-
         this.removedRides = new boolean[sdr.numRides];
+
+        for (Ride r : sdr.rides) {
+            pq.add(r);
+        }
+
         this.vehicles = new ArrayList<>();
-        this.rides = new HashMap<>();
-        this.random = new Random();
 
         for (int i = 0; i < sdr.vehicles; i++) {
             vehicles.add(new Vehicle(i, new Intersection(0, 0)));
@@ -49,28 +59,39 @@ public class Solver2 implements ISolver {
         }
     }
 
-    private void superRandomRiding() {
-        int bestScore = 0;
+    private void greedy() {
 
-        for (int j = 0; j < 50; j++) {
-            init();
-            randomRiding();
+        int numberOfIterations = 0;
 
-            int currentScore = Utils.calculateScoreForEntireSolution(rides, sdr);
+        while (pq.size() > 0 && numberOfIterations < MAX_IT) {
+            numberOfIterations++;
+            for (Vehicle vehicle : vehicles) {
+                Ride r = pq.peek();
 
-            if (currentScore > bestScore) {
-                System.out.println(currentScore);
-                solution = rides;
-                bestScore = currentScore;
+                if (isValidRide(vehicle.id, vehicle, r)) {
+                    Ride ride = pq.poll();
 
+                    if (ride != null) {
+                        vehicle.rideVehicle(ride);
+                        rides.get(vehicle).add(ride);
+                        removedRides[ride.id] = true;
+
+                    } else {
+                        return;
+                    }
+                }
             }
         }
+        
+        randomRiding();
+
+        solution = rides;
     }
 
     private void randomRiding() {
         int currentIterations = 0;
 
-        while (currentIterations < 5000) {
+        while (currentIterations < MAX_IT) {
 
             currentIterations++;
 
@@ -112,8 +133,7 @@ public class Solver2 implements ISolver {
     }
 
     public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {
-        int totalDistance = Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to);
+        int totalDistance = vehicle.tick + (Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to));
         return ((totalDistance < ride.latestFinish) && !removedRides[rideID]);
     }
-
 }

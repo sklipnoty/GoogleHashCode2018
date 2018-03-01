@@ -58,6 +58,7 @@ public class Solver {
             int currentScore = Utils.calculateScoreForEntireSolution(rides, sdr);
         
             if(currentScore > bestScore) {
+                System.out.println(currentScore);
                 solution = rides;
                 bestScore = currentScore;
             }
@@ -67,7 +68,6 @@ public class Solver {
     }
 
     public void randomRiding() {
-        System.out.println("Starting solving");
 
         int currentIterations = 0;
 

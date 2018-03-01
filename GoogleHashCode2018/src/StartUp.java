@@ -6,16 +6,31 @@ import java.util.Scanner;
 import output.SolutionWriter;
 import solver.Solver;
 
-public class StartUp
-{
-    private static final String INPUT_FILE = "resources/b_should_be_easy.in";
-    
-    public static void main(String[] args) throws IOException
-    {
-        Scanner in = new Scanner(Paths.get(INPUT_FILE).toAbsolutePath());
-        SelfDrivingRides problem = new SelfDrivingRides(in);
-        Solver solv = new Solver(problem);
+public class StartUp {
+
+    private static final String INPUT_FILE1 = "resources/b_should_be_easy.in";
+    private static final String INPUT_FILE2 = "resources/c_no_hurry.in";
+    private static final String INPUT_FILE3 = "resources/d_metropolis.in";
+    private static final String INPUT_FILE4 = "resources/e_high_bonus.in";
+
+    public static void main(String[] args) throws IOException {
+
+        SelfDrivingRides problem1 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE1).toAbsolutePath()));
+        SelfDrivingRides problem2 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE2).toAbsolutePath()));
+        SelfDrivingRides problem3 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE3).toAbsolutePath()));
+        SelfDrivingRides problem4 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE4).toAbsolutePath()));
+
+        Solver solv1 = new Solver(problem1);
         SolutionWriter solutionWriter = new SolutionWriter();
-        solutionWriter.writeSolution(solv.rides);
+        solutionWriter.writeSolution(solv1.rides, "b");
+
+        Solver solv2 = new Solver(problem2);
+        solutionWriter.writeSolution(solv2.rides, "c");
+        
+        Solver solv3 = new Solver(problem3);
+        solutionWriter.writeSolution(solv3.rides, "d");
+        
+        Solver solv4 = new Solver(problem4);
+        solutionWriter.writeSolution(solv4.rides, "e");
     }
 }

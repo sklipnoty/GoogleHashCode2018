@@ -20,5 +20,8 @@ public class ScoreCost
         this.timeCost = timeCost;
     }
     
+    public int getRandomHeuristicValue() {
+        return (int) Math.floor(score/timeCost);
+    }
     
 }

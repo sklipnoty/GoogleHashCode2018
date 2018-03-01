@@ -15,7 +15,7 @@ import util.Utils;
  *
  * @author Sklipnoty
  */
-public class Solver {
+public class Solver2 {
 
     public Map<Vehicle, List<Ride>> rides = new HashMap<>();
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
@@ -25,38 +25,41 @@ public class Solver {
     public boolean[] removedRides;
     public int MAX_IT = 500000;
 
-    public Solver(SelfDrivingRides sdr, String name) {
+    public Solver2(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
         System.out.println("Solving " + name);
         this.random = new Random();
         superRandomRiding();
     }
-    
-    public void superRandomRiding() {
-        
+
+    public void init() {
+
+        this.removedRides = new boolean[sdr.numRides];
+        this.vehicles = new ArrayList<>();
+        this.rides = new HashMap<>();
+        this.random = new Random();
+
+        for (int i = 0; i < sdr.vehicles; i++) {
+            vehicles.add(new Vehicle(i, new Intersection(0, 0)));
+        }
+
+        for (Vehicle vehicle : vehicles) {
+            List<Ride> ridesA = new ArrayList<>();
+            rides.putIfAbsent(vehicle, ridesA);
+        }
+    }
+
+    private void superRandomRiding() {
         int bestScore = 0;
-        
-        for(int j = 0; j < 20; j++ ) {
-            //setup
-            this.removedRides = new boolean[sdr.numRides];
-            this.vehicles = new ArrayList<>();
-            this.rides = new HashMap<>();
-            this.random = new Random();
 
-            for (int i = 0; i < sdr.vehicles; i++) {
-                vehicles.add(new Vehicle(i, new Intersection(0, 0)));
-            }
+        for (int j = 0; j < 20; j++) {
+            init();
 
-            for (Vehicle vehicle : vehicles) {
-                List<Ride> ridesA = new ArrayList<>();
-                rides.putIfAbsent(vehicle, ridesA);
-            }
-            
             randomRiding();
-                
+
             int currentScore = Utils.calculateScoreForEntireSolution(rides, sdr);
-        
-            if(currentScore > bestScore) {
+
+            if (currentScore > bestScore) {
                 System.out.println(currentScore);
                 solution = rides;
                 bestScore = currentScore;
@@ -64,8 +67,7 @@ public class Solver {
         }
     }
 
-    public void randomRiding() {
-
+    private void randomRiding() {
         int currentIterations = 0;
 
         while (currentIterations < MAX_IT) {
@@ -84,13 +86,13 @@ public class Solver {
                 rides.get(vehicle).add(ride);
             }
         }
-
     }
-
-    public Ride pickRandomValidRide(Vehicle vehicle) {
+    
+     public Ride pickRandomValidRide(Vehicle vehicle) {
         int randomRide = random.nextInt(sdr.numRides);
         Ride r = sdr.rides.get(randomRide);
         int numberOfIterations = 0;
+       
 
         while (!isValidRide(randomRide, vehicle, r)) {
             r = sdr.rides.get(randomRide);

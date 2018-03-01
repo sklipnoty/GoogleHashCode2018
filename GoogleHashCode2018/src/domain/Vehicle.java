@@ -1,5 +1,14 @@
 package domain;
 
 public class Vehicle {
-   public Intersection it;
+    public int id;
+    public Intersection it;
+
+    public Vehicle(int id, Intersection it) {
+        this.it = it;
+        this.id = id;
+    }
+   
+   
+   
 }

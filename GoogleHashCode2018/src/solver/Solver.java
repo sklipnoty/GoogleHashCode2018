@@ -32,6 +32,11 @@ public class Solver {
              vehicles.add(new Vehicle(i, new Intersection(0,0)));
          }
          
+         for(Vehicle vehicle : vehicles) {
+             List<Ride> ridesA = new ArrayList<>();
+             rides.putIfAbsent(vehicle, ridesA);
+         }
+         
          randomRiding();
      }
      
@@ -52,13 +57,7 @@ public class Solver {
                  continue;
              }
              
-             if(rides.containsKey(vehicle)) {
-                 rides.get(vehicle).add(ride);
-             } else {
-                 List<Ride> ridesA = new ArrayList<>();
-                 ridesA.add(ride);
-                 rides.put(vehicle, ridesA);
-             }
+             rides.get(vehicle).add(ride);
          }
         }
          

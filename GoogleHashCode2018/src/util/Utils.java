@@ -2,6 +2,7 @@ package util;
 
 import domain.Intersection;
 import domain.Ride;
+import domain.ScoreCost;
 import domain.SelfDrivingRides;
 import domain.Vehicle;
 import java.util.List;
@@ -42,4 +43,33 @@ public class Utils
         
         return score;
     }
+    
+    public static ScoreCost calculateScoreCostForOneRideWithCar(
+            Vehicle car, 
+            Ride ride, 
+            SelfDrivingRides problem, 
+            int currentStep
+    ) {
+        int step = currentStep;
+        int score = 0;
+        boolean bonus = false;
+        step += Utils.getDistance(ride.from, car.it);
+        
+        if(step <= ride.earliestStart) {
+            step = ride.earliestStart;
+            bonus = true;
+        }
+
+        int possibleScore = Utils.getDistance(ride.to, ride.from);
+        step += possibleScore;
+
+        if(step < ride.latestFinish) {
+            score += possibleScore;
+            if (bonus) {
+                score += problem.bonus;
+            }
+        }
+        
+        return new ScoreCost(score, (step - currentStep));
+    } 
 }

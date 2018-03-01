@@ -85,7 +85,7 @@ public class Solver {
      
      public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {
          int totalDistance = Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to);
-         return ((totalDistance < ride.latestFinish) && removedRides[rideID]);
+         return ((totalDistance < ride.latestFinish) && !removedRides[rideID]);
      }
      
      

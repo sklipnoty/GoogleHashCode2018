@@ -35,19 +35,16 @@ public class Solver {
          randomRiding();
      }
      
-     public boolean randomRiding() {
+     public void randomRiding() {
          int currentIterations = 0;
          
+         while(currentIterations < MAX_IT) {
+             currentIterations++;
+
          // Voor elk vehicle nemen we een random ride;
          for(Vehicle vehicle : vehicles) {
              System.out.println(currentIterations);
              
-             currentIterations++;
-             
-             if(currentIterations < MAX_IT)
-             {
-                 return true;
-             }
              
              Ride ride = pickRandomValidRide(vehicle);
              
@@ -63,9 +60,8 @@ public class Solver {
                  rides.put(vehicle, ridesA);
              }
          }
+        }
          
-         
-         return false;
      }
      
      public Ride pickRandomValidRide(Vehicle vehicle) {

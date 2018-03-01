@@ -37,6 +37,9 @@ public class SolutionWriter
                 }
                 pw.println();
             }
+            
+            pw.flush();
+            
             System.out.println("OUTPUT FILE WRITTEN");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SolutionWriter.class.getName()).log(Level.SEVERE, null, ex);

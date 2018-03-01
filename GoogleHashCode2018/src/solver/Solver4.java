@@ -19,6 +19,7 @@ import util.Utils;
 
 /**
  * Greedy in terms of Time
+ *
  * @author Sklipnoty
  */
 public class Solver4 implements ISolver {
@@ -65,8 +66,11 @@ public class Solver4 implements ISolver {
 
         while (pq.size() > 0 && numberOfIterations < MAX_IT) {
             numberOfIterations++;
+            Ride r = pq.peek();
+
+      //      System.out.println(pq.size() + " " + numberOfIterations);
+
             for (Vehicle vehicle : vehicles) {
-                Ride r = pq.peek();
 
                 if (isValidRide(vehicle.id, vehicle, r)) {
                     Ride ride = pq.poll();
@@ -75,14 +79,15 @@ public class Solver4 implements ISolver {
                         vehicle.rideVehicle(ride);
                         rides.get(vehicle).add(ride);
                         removedRides[ride.id] = true;
-
                     } else {
                         return;
                     }
                 }
             }
+            
+            pq.poll();
         }
-        
+
         randomRiding();
 
         solution = rides;

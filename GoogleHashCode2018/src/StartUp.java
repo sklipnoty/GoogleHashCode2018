@@ -22,15 +22,15 @@ public class StartUp {
 
         Solver solv1 = new Solver(problem1,"b");
         SolutionWriter solutionWriter = new SolutionWriter();
-        solutionWriter.writeSolution(solv1.rides, "b");
+        solutionWriter.writeSolution(solv1.solution, "b");
 
         Solver solv2 = new Solver(problem2, "c");
-        solutionWriter.writeSolution(solv2.rides, "c");
+        solutionWriter.writeSolution(solv2.solution, "c");
         
         Solver solv3 = new Solver(problem3, "d");
-        solutionWriter.writeSolution(solv3.rides, "d");
+        solutionWriter.writeSolution(solv3.solution, "d");
         
         Solver solv4 = new Solver(problem4, "e");
-        solutionWriter.writeSolution(solv4.rides, "e");
+        solutionWriter.writeSolution(solv4.solution, "e");
     }
 }

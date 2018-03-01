@@ -36,8 +36,8 @@ public class Solver {
         
         int bestScore = 0;
         
-        for(int j = 0; j < MAX_IT; j++ ) {
-        
+        for(int j = 0; j < 200; j++ ) {
+            System.out.println(j);
             //setup
             this.removedRides = new boolean[sdr.numRides];
             this.vehicles = new ArrayList<>();

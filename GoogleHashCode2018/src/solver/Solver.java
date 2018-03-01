@@ -20,20 +20,40 @@ public class Solver {
      public SelfDrivingRides sdr;
      public List<Vehicle> vehicles = new ArrayList<>();
      public Random random;
+     public boolean[] removedRides;
+     public int MAX_IT = 2000;
      
      public Solver(SelfDrivingRides sdr) {
          this.sdr = sdr;
          this.random = new Random();
+         this.removedRides = new boolean[sdr.numRides];
          
          for(int i = 0; i < sdr.vehicles; i++) {
              vehicles.add(new Vehicle(i, new Intersection(0,0)));
          }
+         
+         randomRiding();
      }
      
-     public void randomRiding() {
+     public boolean randomRiding() {
+         int currentIterations = 0;
+         
          // Voor elk vehicle nemen we een random ride;
          for(Vehicle vehicle : vehicles) {
+             System.out.println(currentIterations);
+             
+             currentIterations++;
+             
+             if(currentIterations < MAX_IT)
+             {
+                 return true;
+             }
+             
              Ride ride = pickRandomValidRide(vehicle);
+             
+             if(ride == null) {
+                 continue;
+             }
              
              if(rides.containsKey(vehicle)) {
                  rides.get(vehicle).add(ride);
@@ -43,25 +63,33 @@ public class Solver {
                  rides.put(vehicle, ridesA);
              }
          }
-      
+         
+         
+         return false;
      }
      
      public Ride pickRandomValidRide(Vehicle vehicle) {
          int randomRide = random.nextInt(sdr.numRides);
          Ride r = sdr.rides.get(randomRide);
+         int numberOfIterations = 0;
          
-         while(!isValidRide(vehicle, r))
+         while(!isValidRide(randomRide, vehicle, r))
          {
             r = sdr.rides.get(randomRide);
+            numberOfIterations++;
+            
+            if(numberOfIterations >= MAX_IT)
+                return null;
          }
          
+         removedRides[randomRide] = true;
          return r;
      }
      
      
-     public boolean isValidRide(Vehicle vehicle, Ride ride) {
+     public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {
          int totalDistance = Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to);
-         return (totalDistance < ride.latestFinish);
+         return ((totalDistance < ride.latestFinish) && removedRides[rideID]);
      }
      
      

@@ -37,7 +37,10 @@ public class SelfDrivingRides
             ride.id = i;
             ride.earliestStart = in.nextInt();
             ride.latestFinish = in.nextInt();
+            ride.from = startInt;
+            ride.to = endInt;
             
+            rides.add(ride);
         }
     }
 }

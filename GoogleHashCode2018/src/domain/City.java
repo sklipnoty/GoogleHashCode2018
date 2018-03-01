@@ -10,8 +10,8 @@ package domain;
  * @author Sklipnoty
  */
 public class City {
-    private int horizontalStreetsR; 
-    private int verticalStreetsC;
+    public int horizontalStreetsR; 
+    public int verticalStreetsC;
     
     
 }

@@ -89,22 +89,26 @@ public class Solver2 {
     }
     
      public Ride pickRandomValidRide(Vehicle vehicle) {
+        Ride currentBestRide = null;
         int randomRide = random.nextInt(sdr.numRides);
         Ride r = sdr.rides.get(randomRide);
-        int numberOfIterations = 0;
-       
+        int currentBestScore = 0;
+        int locationOfBestRide = 0;
+        
+        for(int i = 0; i < 5000; i++) {
+            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr, 0).getRandomHeuristicValue();        
 
-        while (!isValidRide(randomRide, vehicle, r)) {
-            r = sdr.rides.get(randomRide);
-            numberOfIterations++;
-
-            if (numberOfIterations >= 10000) {
-                return null;
+            if(currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
+                currentBestRide = r;
+                currentBestScore = current;
+                locationOfBestRide = i;
             }
+            
+            r = sdr.rides.get(randomRide);
         }
 
-        removedRides[randomRide] = true;
-        return r;
+        removedRides[locationOfBestRide] = true;
+        return currentBestRide;
     }
 
     public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {

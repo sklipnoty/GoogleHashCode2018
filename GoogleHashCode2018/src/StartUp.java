@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import output.SolutionWriter;
 import solver.Solver;
+import solver.Solver2;
 
 public class StartUp {
 
@@ -30,7 +31,7 @@ public class StartUp {
 //        Solver solv3 = new Solver(problem3, "d");
 //        solutionWriter.writeSolution(solv3.solution, "d");
         
-        Solver solv4 = new Solver(problem4, "e");
-        solutionWriter.writeSolution(solv4.solution, "e");
+        Solver2 solv4 = new Solver2(problem1, "b");
+        solutionWriter.writeSolution(solv4.solution, "b");
     }
 }

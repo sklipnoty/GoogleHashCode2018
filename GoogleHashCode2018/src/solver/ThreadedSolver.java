@@ -18,7 +18,7 @@ import util.Utils;
 
 public class ThreadedSolver {
 
-    private int NUM_THREADS = 5;
+    private int NUM_THREADS = 2;
     private ExecutorService executor;
     private SelfDrivingRides sdr;
 
@@ -28,23 +28,23 @@ public class ThreadedSolver {
     }
 
     public Map<Vehicle, List<Ride>> solve() throws InterruptedException, ExecutionException {
-        List<Callable<Solver6>> solvers = new ArrayList<>();
+        List<Callable<Solver7>> solvers = new ArrayList<>();
 
         for (int i = 0; i < NUM_THREADS; i++) {
             final int x = i;
-            solvers.add((Callable<Solver6>) () -> {
-                return new Solver6(sdr, x + " ");
+            solvers.add((Callable<Solver7>) () -> {
+                return new Solver7(sdr, x + " ");
             });
         }
 
-        List<Future<Solver6>> futureSolvers = executor.invokeAll(solvers);
+        List<Future<Solver7>> futureSolvers = executor.invokeAll(solvers);
 //        executor.awaitTermination(1, TimeUnit.SECONDS);
 //        executor.shutdown();
 
         Map<Vehicle, List<Ride>> solution = null;
         int bestScore = -1;
 
-        for (Future<Solver6> s : futureSolvers) {
+        for (Future<Solver7> s : futureSolvers) {
             int score = Utils.calculateScoreForEntireSolution(s.get().solution, sdr);
             
             System.out.println(score);

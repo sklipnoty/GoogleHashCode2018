@@ -11,7 +11,9 @@ public class Ride {
     public int earliestStart;
     public int latestFinish;
     public int score;
-    
+
+    public Ride nextRide;
+
     public int heuristicScore;
 
     public Ride() {
@@ -29,6 +31,8 @@ public class Ride {
         this.heuristicScore = heuristicScore;
     }
 
-    
-   
+    public void setNextRide(Ride nextRide) {
+        this.nextRide = nextRide;
+    }
+
 }

@@ -33,7 +33,7 @@ public class Solver4 implements ISolver {
     private static final Integer MAX_IT = 10000;
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
     private String name;
-    
+
     public Solver4(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
         this.name = name;
@@ -67,8 +67,8 @@ public class Solver4 implements ISolver {
         int numberOfIterations = 0;
 
         while (pq.size() > 0 && numberOfIterations < MAX_IT) {
-       //     System.out.println(name +" "  +pq.size());
-            
+            //     System.out.println(name +" "  +pq.size());
+
             numberOfIterations++;
             Ride r = pq.peek();
 
@@ -76,10 +76,30 @@ public class Solver4 implements ISolver {
             for (Vehicle vehicle : vehicles) {
 
                 if (isValidRide(vehicle.id, vehicle, r)) {
-                    
-                    if(random.nextInt(50) < 25)
+
+                    if (random.nextInt(50) < 25) {
                         continue;
+                    }
+
+                    // check if vehicle is "close"          
+                    int minDistance = Integer.MAX_VALUE;
+
+                    for (Vehicle v : vehicles) {
+                        int distance = Utils.getDistance(v.it, r.from);
+
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                        }
+                    }
+
+                    double cd = ((double) Utils.getDistance(vehicle.it, r.from));
+
+                    double distance = minDistance / cd;
                     
+                    if (distance > 0.08) {
+                        continue;
+                    }
+
                     r = pq.poll();
 
                     if (r != null) {
@@ -146,7 +166,7 @@ public class Solver4 implements ISolver {
     }
 
     public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {
-        int totalDistance = vehicle.tick + (Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to));
+        int totalDistance = vehicle.tick + (Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to) ) + 5;
         return ((totalDistance < ride.latestFinish) && !removedRides[rideID]);
     }
 }

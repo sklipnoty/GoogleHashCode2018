@@ -19,10 +19,10 @@ public class ScoreCost {
         this.timeCost = timeCost;
     }
 
-    public int getRandomHeuristicValue() {
+    public int getRandomHeuristicValue(int time) {
         // System.out.println("[S] " + score + " [T] " +timeCost);
         if (score > 0 && timeCost > 0) {
-            double value = (((double) timeCost / (double) score));
+            double value = (((double) timeCost / (double) score)) * time;
         //    System.out.println("[T] " + timeCost + " [S] " + score + " [V] " + (int) value);
             return (int) value;
         } else {

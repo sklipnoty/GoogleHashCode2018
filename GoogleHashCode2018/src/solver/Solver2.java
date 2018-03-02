@@ -96,7 +96,7 @@ public class Solver2 implements ISolver {
         int locationOfBestRide = 0;
 
         for (int i = 0; i < sdr.numRides / 3; i++) {
-            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue();
+            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue(1);
 
             if (currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
                 currentBestRide = r;

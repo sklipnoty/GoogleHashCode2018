@@ -18,7 +18,7 @@ import util.Utils;
 
 public class ThreadedSolver {
 
-    private int NUM_THREADS = 4;
+    private int NUM_THREADS = 5;
     private ExecutorService executor;
     private SelfDrivingRides sdr;
 

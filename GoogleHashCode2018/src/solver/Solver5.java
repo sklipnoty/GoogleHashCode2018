@@ -29,7 +29,7 @@ public class Solver5 implements ISolver {
     public List<Vehicle> vehicles = new ArrayList<>();
     public PriorityQueue<Ride> pq = new PriorityQueue<>(new Utils.RideHeuristicComparator());
     public boolean[] removedRides;
-    private static final Integer MAX_IT = 10000;
+    private static final Integer MAX_IT = 100000;
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
     private String name;
 
@@ -64,40 +64,43 @@ public class Solver5 implements ISolver {
     //We doen een poging om het aantal rides te maximaliseren door een chain van rides te maken die dicht bij elkaar ligt. 
     //MAW we houden rekening met de score. 
     public void ride() {
+        int outerNumberOfIterations = 0;
 
+        while (outerNumberOfIterations < 20) {
 
-        for (Vehicle vehicle : vehicles) {
-            
-            int numberOfIterations = 0;
-            buildPQ(vehicle, sdr.rides);
+            outerNumberOfIterations++;
 
-            while (pq.size() > 0 && numberOfIterations < MAX_IT) {
-                //     System.out.println(name +" "  +pq.size());
+            for (Vehicle vehicle : vehicles) {
 
-                numberOfIterations++;
-                Ride r = pq.peek();
+                int numberOfIterations = 0;
+                buildPQ(vehicle, sdr.rides);
 
-                //      System.out.println(pq.size() + " " + numberOfIterations);
-                if (isValidRide(vehicle.id, vehicle, r)) {
+                while (pq.size() > 0 && numberOfIterations < MAX_IT) {
+                    //     System.out.println(name +" "  +pq.size());
+
+                    numberOfIterations++;
+                    Ride r = pq.peek();
+
+                    //      System.out.println(pq.size() + " " + numberOfIterations);
+                    if (isValidRide(vehicle.id, vehicle, r)) {
 //
-//                    if (random.nextInt(50) < 25) {
-//                        continue;
-//                    }
+                        if (random.nextInt(50) < 10) {
+                            continue;
+                        }
 
-                    r = pq.poll();
+                        r = pq.poll();
 
-                    if (r != null) {
-                        vehicle.rideVehicle(r);
-                        rides.get(vehicle).add(r);
-                        removedRides[r.id] = true;
-                        buildPQ(vehicle, sdr.rides);
-
-                        //reinit PQ;
+                        if (r != null) {
+                            vehicle.rideVehicle(r);
+                            rides.get(vehicle).add(r);
+                            removedRides[r.id] = true;
+                            buildPQ(vehicle, sdr.rides);
+                        } else {
+                            return;
+                        }
                     } else {
-                        return;
+                        pq.poll();
                     }
-                } else {
-                    pq.poll();
                 }
             }
         }
@@ -113,7 +116,7 @@ public class Solver5 implements ISolver {
 
             if (!removedRides[r.id]) {
                 //HS
-                r.setHeuristicScore(Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue());
+                r.setHeuristicScore(Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue(r.latestFinish));
                 pq.add(r);
             }
         }

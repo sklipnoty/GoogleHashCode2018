@@ -25,11 +25,11 @@ public class StartUp {
 
         SolutionWriter solutionWriter = new SolutionWriter();
 
-      /*  ThreadedSolver threadedSolver1 = new ThreadedSolver(problem1);
+        ThreadedSolver threadedSolver1 = new ThreadedSolver(problem1);
         solutionWriter.writeSolution(threadedSolver1.solve(), "b");
 
         ThreadedSolver threadedSolver2 = new ThreadedSolver(problem2);
-        solutionWriter.writeSolution(threadedSolver2.solve(), "c"); */
+        solutionWriter.writeSolution(threadedSolver2.solve(), "c"); 
 
         ThreadedSolver threadedSolver3 = new ThreadedSolver(problem3);
         solutionWriter.writeSolution(threadedSolver3.solve(), "d");

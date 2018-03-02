@@ -24,10 +24,19 @@ public class StartUp {
         SelfDrivingRides problem4 = new SelfDrivingRides(new Scanner(Paths.get(INPUT_FILE4).toAbsolutePath()));
 
         SolutionWriter solutionWriter = new SolutionWriter();
+
+        ThreadedSolver threadedSolver1 = new ThreadedSolver(problem1);
+        solutionWriter.writeSolution(threadedSolver1.solve(), "b");
+
+        ThreadedSolver threadedSolver2 = new ThreadedSolver(problem2);
+        solutionWriter.writeSolution(threadedSolver2.solve(), "c");
+
+        ThreadedSolver threadedSolver3 = new ThreadedSolver(problem3);
+        solutionWriter.writeSolution(threadedSolver3.solve(), "d");
         
-        ThreadedSolver threadedSolver2 = new ThreadedSolver(problem3);
-        solutionWriter.writeSolution(threadedSolver2.solve(), "e");
-        
+        ThreadedSolver threadedSolver4 = new ThreadedSolver(problem4);
+        solutionWriter.writeSolution(threadedSolver4.solve(), "e");
+
         System.exit(0);
     }
 }

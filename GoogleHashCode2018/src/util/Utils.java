@@ -84,7 +84,8 @@ public class Utils {
 
         @Override
         public int compare(Ride o1, Ride o2) {
-            return Integer.compare(o1.earliestStart, o2.earliestStart);
+            //      return Integer.compare(((o1.latestFinish + o1.earliestStart) + o1.score), ((o2.latestFinish + o2.earliestStart) +o2.score));
+            return Integer.compare(o1.from.col, o1.to.col);
         }
     }
 }

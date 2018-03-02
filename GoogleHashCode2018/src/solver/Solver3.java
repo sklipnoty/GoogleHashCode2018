@@ -19,6 +19,7 @@ import util.Utils;
 
 /**
  * Greedy in terms of Score
+ *
  * @author Sklipnoty
  */
 public class Solver3 implements ISolver {
@@ -69,6 +70,11 @@ public class Solver3 implements ISolver {
                 Ride r = pq.peek();
 
                 if (isValidRide(vehicle.id, vehicle, r)) {
+
+                    if (random.nextInt(50) < 40) {
+                        continue;
+                    }
+
                     Ride ride = pq.poll();
 
                     if (ride != null) {
@@ -82,7 +88,7 @@ public class Solver3 implements ISolver {
                 }
             }
         }
-        
+
         randomRiding();
 
         solution = rides;

@@ -30,11 +30,13 @@ public class Solver4 implements ISolver {
     public List<Vehicle> vehicles = new ArrayList<>();
     public PriorityQueue<Ride> pq = new PriorityQueue<>(new Utils.RideTimeComparator());
     public boolean[] removedRides;
-    private static final Integer MAX_IT = 5000;
+    private static final Integer MAX_IT = 10000;
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
-
+    private String name;
+    
     public Solver4(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
+        this.name = name;
         System.out.println("Solving " + name);
         this.random = new Random();
         init();
@@ -65,13 +67,19 @@ public class Solver4 implements ISolver {
         int numberOfIterations = 0;
 
         while (pq.size() > 0 && numberOfIterations < MAX_IT) {
+       //     System.out.println(name +" "  +pq.size());
+            
             numberOfIterations++;
             Ride r = pq.peek();
 
-      //      System.out.println(pq.size() + " " + numberOfIterations);
+            //      System.out.println(pq.size() + " " + numberOfIterations);
             for (Vehicle vehicle : vehicles) {
 
                 if (isValidRide(vehicle.id, vehicle, r)) {
+                    
+                    if(random.nextInt(50) < 25)
+                        continue;
+                    
                     r = pq.poll();
 
                     if (r != null) {
@@ -127,12 +135,13 @@ public class Solver4 implements ISolver {
             if (currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
                 currentBestRide = r;
                 currentBestScore = current;
-                locationOfBestRide = i;
+                locationOfBestRide = randomRide;
             }
 
             r = sdr.rides.get(randomRide);
         }
 
+        removedRides[locationOfBestRide] = true;
         return currentBestRide;
     }
 

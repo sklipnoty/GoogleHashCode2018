@@ -84,9 +84,9 @@ public class Solver5 implements ISolver {
                     //      System.out.println(pq.size() + " " + numberOfIterations);
                     if (isValidRide(vehicle.id, vehicle, r)) {
 //
-                        if (random.nextInt(50) < 10) {
-                            continue;
-                        }
+//                        if (random.nextInt(50) < 10) {
+//                            continue;
+//                        }
 
                         r = pq.poll();
 

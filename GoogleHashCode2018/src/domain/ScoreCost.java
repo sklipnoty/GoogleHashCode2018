@@ -9,19 +9,25 @@ package domain;
  *
  * @author Bart
  */
-public class ScoreCost
-{
+public class ScoreCost {
+
     public int score;
     public int timeCost;
 
-    public ScoreCost(int score, int timeCost)
-    {
+    public ScoreCost(int score, int timeCost) {
         this.score = score;
         this.timeCost = timeCost;
     }
-    
+
     public int getRandomHeuristicValue() {
-        return score;
+        // System.out.println("[S] " + score + " [T] " +timeCost);
+        if (score > 0 && timeCost > 0) {
+            double value = (((double) timeCost / (double) score));
+        //    System.out.println("[T] " + timeCost + " [S] " + score + " [V] " + (int) value);
+            return (int) value;
+        } else {
+            return 500000;
+        }
+
     }
-    
 }

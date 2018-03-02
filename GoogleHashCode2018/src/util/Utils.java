@@ -87,4 +87,13 @@ public class Utils {
              return Integer.compare(o1.latestFinish, o2.latestFinish);
         }
     }
+    
+    public static class RideHeuristicComparator implements Comparator<Ride> {
+
+        @Override
+        public int compare(Ride o1, Ride o2) {
+             return Integer.compare(o1.heuristicScore, o2.heuristicScore);
+        }
+    }
+
 }

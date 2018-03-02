@@ -21,7 +21,7 @@ import util.Utils;
  *
  * @author Sklipnoty
  */
-public class Solver5 implements ISolver {
+public class Solver6 implements ISolver {
 
     private SelfDrivingRides sdr;
     private final Random random;
@@ -29,11 +29,11 @@ public class Solver5 implements ISolver {
     public List<Vehicle> vehicles = new ArrayList<>();
     public PriorityQueue<Ride> pq = new PriorityQueue<>(new Utils.RideHeuristicComparator());
     public boolean[] removedRides;
-    private static final Integer MAX_IT = 100000;
+    private static final Integer MAX_IT = 50000;
     public Map<Vehicle, List<Ride>> solution = new HashMap<>();
     private String name;
 
-    public Solver5(SelfDrivingRides sdr, String name) {
+    public Solver6(SelfDrivingRides sdr, String name) {
         this.sdr = sdr;
         this.name = name;
         System.out.println("Solving " + name);
@@ -66,7 +66,7 @@ public class Solver5 implements ISolver {
     public void ride() {
         int outerNumberOfIterations = 0;
 
-        while (outerNumberOfIterations < 20) {
+        while (outerNumberOfIterations < 30) {
 
             outerNumberOfIterations++;
 
@@ -103,11 +103,34 @@ public class Solver5 implements ISolver {
                     }
                 }
             }
+            
+            randomRiding();
         }
 
         solution = rides;
     }
-    
+
+    private void randomRiding() {
+        int currentIterations = 0;
+
+        while (currentIterations < random.nextInt(5)) {
+
+            currentIterations++;
+
+            // Voor elk vehicle nemen we een random ride;
+            for (Vehicle vehicle : vehicles) {
+
+                Ride ride = pickRandomValidRide(vehicle);
+
+                if (ride == null) {
+                    continue;
+                }
+
+                rides.get(vehicle).add(ride);
+                vehicle.rideVehicle(ride);
+            }
+        }
+    }
 
     public void buildPQ(Vehicle vehicle, List<Ride> rides) {
 
@@ -117,7 +140,7 @@ public class Solver5 implements ISolver {
 
             if (!removedRides[r.id]) {
                 //HS
-                r.setHeuristicScore(Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue((int)(r.latestFinish-r.earliestStart)));
+                r.setHeuristicScore(Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue((int) (r.latestFinish)));
                 pq.add(r);
             }
         }
@@ -126,6 +149,29 @@ public class Solver5 implements ISolver {
     public boolean isValidRide(int rideID, Vehicle vehicle, Ride ride) {
         int totalDistance = vehicle.tick + (Utils.getDistance(vehicle.it, ride.from) + Utils.getDistance(ride.from, ride.to)) + 5;
         return ((totalDistance < ride.latestFinish) && !removedRides[rideID]);
+    }
+
+    public Ride pickRandomValidRide(Vehicle vehicle) {
+        Ride currentBestRide = null;
+        int randomRide = random.nextInt(sdr.numRides);
+        Ride r = sdr.rides.get(randomRide);
+        int currentBestScore = 0;
+        int locationOfBestRide = 0;
+
+        for (int i = 0; i < sdr.numRides / 3; i++) {
+            int current = Utils.calculateScoreCostForOneRideWithCar(vehicle, r, sdr).getRandomHeuristicValue(1);
+
+            if (currentBestScore < current && isValidRide(randomRide, vehicle, r)) {
+                currentBestRide = r;
+                currentBestScore = current;
+                locationOfBestRide = randomRide;
+            }
+
+            r = sdr.rides.get(randomRide);
+        }
+
+        removedRides[locationOfBestRide] = true;
+        return currentBestRide;
     }
 
 }

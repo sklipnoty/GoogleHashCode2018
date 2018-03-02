@@ -28,23 +28,23 @@ public class ThreadedSolver {
     }
 
     public Map<Vehicle, List<Ride>> solve() throws InterruptedException, ExecutionException {
-        List<Callable<Solver5>> solvers = new ArrayList<>();
+        List<Callable<Solver6>> solvers = new ArrayList<>();
 
         for (int i = 0; i < NUM_THREADS; i++) {
             final int x = i;
-            solvers.add((Callable<Solver5>) () -> {
-                return new Solver5(sdr, x + " ");
+            solvers.add((Callable<Solver6>) () -> {
+                return new Solver6(sdr, x + " ");
             });
         }
 
-        List<Future<Solver5>> futureSolvers = executor.invokeAll(solvers);
+        List<Future<Solver6>> futureSolvers = executor.invokeAll(solvers);
 //        executor.awaitTermination(1, TimeUnit.SECONDS);
 //        executor.shutdown();
 
         Map<Vehicle, List<Ride>> solution = null;
         int bestScore = -1;
 
-        for (Future<Solver5> s : futureSolvers) {
+        for (Future<Solver6> s : futureSolvers) {
             int score = Utils.calculateScoreForEntireSolution(s.get().solution, sdr);
             
             System.out.println(score);
